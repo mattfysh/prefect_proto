@@ -1,17 +1,38 @@
 import asyncio
 import time
+import json
 from prefect import flow, task, tags, get_client
 from prefect.tasks import task_input_hash
+from prefect.artifacts import create_markdown_artifact
 
 
 @task(cache_key_fn=task_input_hash)
 def get_meaning_task(id: str) -> int:
     print("TASK: simulating slow compute...")
-    time.sleep(20)
-    print("TASK: ")
+    time.sleep(5)
+    print("TASK: fin")
     if id == "abc":
-        return 123
-    return 42
+        result = 1234
+    else:
+        result = 420
+
+    markdown = f"""# Result
+
+Here we display the result of the compute task, to test viability
+of surfacing computation results as artifacts in the Prefect UI
+
+## Value
+
+```
+{json.dumps(result)}
+```
+"""
+
+    create_markdown_artifact(
+        key=f"artifact-id-{id}", markdown=markdown, description="You've got mail!"
+    )
+
+    return result
 
 
 @flow(result_storage="s3/cache", log_prints=True)
