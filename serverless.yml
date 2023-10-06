@@ -1,0 +1,29 @@
+service: prefect-proto
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: ap-southeast-2
+
+package:
+  patterns:
+    - "!**"
+    - src/index.py
+
+useDotenv: true
+
+functions:
+  hello:
+    handler: src/index.handler
+    timeout: 60
+    environment:
+      PREFECT_HOME: /tmp/.prefect
+      PREFECT_API_KEY: ${env:PREFECT_API_KEY}
+      PREFECT_API_URL: ${env:PREFECT_API_URL}
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+
+plugins:
+  - serverless-python-requirements

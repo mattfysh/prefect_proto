@@ -1,0 +1,19 @@
+{
+  "name": "prefect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless": "^3.35.2"
+  },
+  "devDependencies": {
+    "serverless-python-requirements": "^6.0.0"
+  },
+  "scripts": {
+    "deploy": "sls deploy",
+    "invoke": "sls invoke --function hello -l"
+  }
+}
