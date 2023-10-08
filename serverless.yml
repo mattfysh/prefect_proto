@@ -22,13 +22,13 @@ provider:
 package:
   patterns:
     - "!**"
-    - src/index.py
+    - src/**
 
 useDotenv: true
 
 functions:
   hello:
-    handler: src/index.handler
+    handler: src.index.handler
     memorySize: 1024
     timeout: 60
     environment:
